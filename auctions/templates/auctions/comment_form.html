@@ -1,0 +1,36 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<h1>Add Comment</h1>
+<h4>Listing:</h4>
+<div class="card border border-secondary mb-3 mt-3">
+    <div class="card-body">
+        {% if listing.image_url %}
+        <img src="{{listing.image_url}}" class="img-fluid rounded float-end m-1">
+        {% endif %}
+        <h5 class="card-title">{{listing.title}}</h5>
+        <h6 class="card-subtitle text-white-50 mb-3">{{listing.category}}</h6>
+        <div class="card-text mb-3">
+            <p>{{listing.description}}</p>
+            <strong>Current Price</strong>:
+            {% if listing.current_bid %}
+            {{ listing.current_bid.value }}$
+            {% else %}
+            {{ listing.starting_bid }}$
+            {% endif %}
+
+            <br>
+        </div>
+        <a href="{% url 'listing' listing.id %}" class="card-link">View Listing</a>
+    </div>
+</div>
+
+<form action="{% url 'add_comment' listing.id %}" method="POST">
+    {% csrf_token %}
+    <h4 class="mb-3">Comment:</h4>
+    {{ form }}
+    <button type="submit" class="btn btn-primary mb-3">Add Comment</button>
+</form>
+
+{% endblock %}

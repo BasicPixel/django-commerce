@@ -1,0 +1,41 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<h2>Listings made by user: {{ user }}</h2>
+
+{% for listing in listings %}
+    <div class="card border border-secondary mt-4">
+        <div class="card-body">
+            {% if listing.image_url %}
+            <img src="{{listing.image_url}}" class="img-fluid rounded float-end m-1">
+            {% endif %}
+            <h5 class="card-title">{{listing.title}}</h5>
+            <h6 class="card-subtitle text-white-50 mb-3">{{listing.category}}</h6>
+            <div class="card-text mb-3">
+                <p>{{listing.description}}</p>
+                <strong>Current Price</strong>:
+                {% if listing.current_bid %}
+                {{ listing.current_bid.value }}$
+                {% else %}
+                {{ listing.starting_bid }}$
+                {% endif %}
+                <br>
+            </div>
+            <div class="mb-2">
+                {% if listing.active %}
+                <span class="text-success">Active</span>
+                {% else %}
+                <span class="text-warning">Not Active</span>
+                {% endif %}
+            </div>
+            <a href="{% url 'listing' listing.id %}" class="card-link">View Listing</a>
+        </div>
+    </div>
+{% empty %}
+    <div class="p-5 text-center bg-dark">
+        <h3 class="text-muted">User doesn't seem to have any listings.</h3>
+    </div>
+{% endfor %}
+
+{% endblock %}

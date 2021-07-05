@@ -1,0 +1,7 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Error 404: Page not found</h2>
+    <p class="lead">The requested page was not found.</p>
+    <a href="{% url 'index' %}" class="btn btn-primary">Back to homepage.</a>
+{% endblock %}

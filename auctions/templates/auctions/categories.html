@@ -1,0 +1,18 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<h2>Filter Listings By Category</h2>
+
+<div class="card">
+    <ul class="list-group">
+        {% for category in categories %}
+
+            <a href="{% url 'category' category %}" class="list-group-item bg-dark">{{ category }}</a>
+
+        {% endfor %}
+    </ul>
+</div>
+
+
+{% endblock %}

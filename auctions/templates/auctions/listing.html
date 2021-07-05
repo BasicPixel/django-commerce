@@ -1,0 +1,99 @@
+{% extends "auctions/layout.html" %} {% block body %}
+
+<h1>Listing: {{ listing.title }}</h1>
+
+{% if user.is_authenticated and user.id == listing.winner.id %}
+  <div class="alert alert-dark mt-3">You are the winner of this auction!</div>
+{% endif %}
+
+{% if listing.image_url %}
+  <img src="{{ listing.image_url }}" alt="Listing Image" class="img-fluid mt-3 mb-3 rounded-lg">
+{% endif %}
+
+<h3>Listing Information</h3>
+
+<h5 class="mt-3">Description</h5>
+<p>{{ listing.description|linebreaks }}</p>
+
+<h5 class="mt-3">Category</h5>
+{% if listing.category %}
+  {{ listing.category }}
+{% else %}
+  No Category
+{% endif %}
+
+<h5 class="mt-3">Owner</h5>
+<a href="{% url 'user' listing.owner.id %}">{{ listing.owner }}</a>
+
+{% if not listing.active %}
+
+  {% if listing.winner %}
+  <h5>Winner</h5>
+  <a href="{% url 'user' listing.winner.id %}">{{ listing.winner }}</a>
+
+  {% endif %}
+
+{% endif %}
+
+<hr>
+
+<div class="fs-5">Current bid: {{ listing.current_bid.value }}$</div>
+
+<div class="mt-3">
+
+{% if user != listing.owner %}
+
+  <form action="{% url 'place_bid' listing.id %}" method="POST" class="mb-3">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Place Bid">
+  </form>
+
+{% endif %}
+
+<div class="btn-group">
+
+
+{% if listing not in watchlist %}
+  <a href="{% url 'save_to_watchlist' listing.id %}" class="btn btn-primary text-light">Save to Watchlist</a>
+{% else %}
+  <a href="{% url 'remove_from_watchlist' listing.id %}" class="btn btn-primary text-light">Delete from Watchlist</a>
+{% endif %}
+
+{% if user.id == listing.owner.id %}
+<a href="{% url 'delete' listing.id %}" class="btn btn-danger text-light">Delete Listing</a>
+
+{% if listing.active %}
+<a href="{% url 'close' listing.id %}" class="btn btn-warning text-dark">Close Auction</a>
+{% endif %}
+
+{% endif %}
+
+</div>
+
+<hr>
+
+<h3>Comments</h3>
+
+<a href="{% url 'add_comment' listing.id %}" class="btn btn-primary text-light mt-2 mb-2">Add Comment</a>
+
+{% for comment in comments %}
+
+  <hr>
+  <h6>User
+      <a href="{% url 'user' comment.user.id %}">{{comment.user}}</a>
+    Commented:
+  </h6>
+  <p>
+    {{comment.value|linebreaks}}
+  </p>
+  <div class="text-muted">{{comment.creation_date}}</div>
+  {% empty %}
+
+  <div class=" text-center bg-dark">
+      <h3 class="p-5 text-muted">There aren't any comments yet.</h3>
+</div>
+
+{% endfor %}
+
+{% endblock %}
