@@ -22,6 +22,7 @@
                 })
             })
         </script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     </head>
     <body class="bg-dark text-light py-2">
         <div class="container col-lg-8 col-md-10 col-sm-12">
@@ -46,6 +47,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'create' %}">Create Listing</a>
                 </li>
+
                 {% if user.is_authenticated %}
 
                 <li class="nav-item">
@@ -67,6 +69,14 @@
                         <a class="nav-link" href="{% url 'register' %}">Register</a>
                     </li>
                 {% endif %}
+
+                <li class="nav-item">
+                    <a class="nav-link" target="_blank">|</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/basicPixel/django-commerce" target="_blank"><i class="bi bi-github pe-2"></i>GitHub</a>
+                </li>
             </ul>
             <hr>
             {% block body %}
