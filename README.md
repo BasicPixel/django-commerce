@@ -1,6 +1,6 @@
-# MD Wiki
+# django-commerce
 
-MD Wiki is a simple markdown-supported wikipedia-like website, made with Django for CS50's Web programming course (Week 3).
+Django Commerce (or techshop) is a fake e-commerce web application, made with Django, Bootstrap for CS50's Web programming course (Week 4).
 
 ## Usage
 
